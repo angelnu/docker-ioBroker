@@ -50,16 +50,16 @@ spec:
         volumeMounts:
         - mountPath: /opt/iobroker/iobroker-data
           name: iobroker-volume
-        - mountPath: /etc/timezone_host
-          name: timezone-volume
+        - mountPath: /etc/localtime_host
+          name: localtime-volume
       volumes:
         - name: iobroker-volume
           glusterfs:
             endpoints: glusterfs-storage
             path: iobroker
-        - name: timezone-volume
+        - name: localtime-volume
           hostPath:
-            path: /etc/timezone
+            path: /etc/localtime
             type: File
         #- name: logs
         #  emptyDir: {}
