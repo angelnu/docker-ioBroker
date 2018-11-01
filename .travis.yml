@@ -8,26 +8,34 @@ language: bash
 jobs:
   include:
   - stage: Build iobroker
-    script:
-    - DOCKER_ARCH=amd64 ./build/travis_build.sh
-    env: DOCKER_ARCH=amd64
-  - script:
-    - DOCKER_ARCH=arm64 ./build/travis_build.sh
-  - script:
-    - DOCKER_ARCH=arm   ./build/travis_build.sh
+    script: ./build/travis_build.sh
+    env:
+    - DOCKER_ARCH=amd64
+  - script: ./build/travis_build.sh
+    env:
+    - DOCKER_ARCH=arm64
+  - script: ./build/travis_build.sh
+    env:
+    - DOCKER_ARCH=arm
 
   - stage: Build iobroker full
-    script:
-    - CONFIG_FILE="./build.all.config" DOCKER_ARCH=amd64 ./build/travis_build.sh
-  - script:
-    - CONFIG_FILE="./build.all.config" DOCKER_ARCH=arm64 ./build/travis_build.sh
-  - script:
-    - CONFIG_FILE="./build.all.config" DOCKER_ARCH=arm   ./build/travis_build.sh
+    script: ./build/travis_build.sh
+    env:
+    - CONFIG_FILE="./build.all.config"
+    - DOCKER_ARCH=amd64
+  - script: ./build/travis_build.sh
+    env:
+    - CONFIG_FILE="./build.all.config"
+    - DOCKER_ARCH=arm64
+  - script: ./build/travis_build.sh
+    env:
+    - CONFIG_FILE="./build.all.config"
+    - DOCKER_ARCH=arm
 
   - stage: Manifest iobroker
-    script:
-    - ./build/travis_manifest.sh
+    script: ./build/travis_manifest.sh
 
   - stage: Manifest iobroker-full
-    script:
-    -  CONFIG_FILE="./build.all.config" ./build/travis_manifest.sh
+    script: ./build/travis_manifest.sh
+    env:
+      -  CONFIG_FILE="./build.all.config"
