@@ -12,6 +12,8 @@ spec:
   template:
     metadata:
       name: iobroker
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/iobroker: unconfined
       labels:
         app: iobroker
     spec:
@@ -55,6 +57,11 @@ spec:
           name: iobroker-volume
         - mountPath: /etc/localtime_host
           name: localtime-volume
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - DAC_READ_SEARCH
       volumes:
         - name: iobroker-volume
           glusterfs:
