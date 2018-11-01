@@ -35,11 +35,10 @@ jobs:
     - TAG_PREFIX=full-
     - CONFIG_FILE="./build.all.config"
 
-  - stage: Manifest iobroker
+  - stage: Manifest
     script: ./build/travis_manifest.sh
 
-  - stage: Manifest iobroker-full
-    script: ./build/travis_manifest.sh
+  - script: ./build/travis_manifest.sh
     env:
       - TAG_PREFIX=full-
       - CONFIG_FILE="./build.all.config"
