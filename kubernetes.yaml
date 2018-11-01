@@ -18,7 +18,7 @@ spec:
       hostname: iobroker
       containers:
       - name: iobroker
-        image: angelnu/iobroker:latest
+        image: angelnu/iobroker:full-latest
         imagePullPolicy: Always
         # command:
         #   - sh
