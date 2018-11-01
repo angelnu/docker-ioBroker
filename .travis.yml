@@ -21,16 +21,16 @@ jobs:
   - stage: Build iobroker full
     script: ./build/travis_build.sh
     env:
-    - CONFIG_FILE="./build.all.config"
     - DOCKER_ARCH=amd64
+    - CONFIG_FILE="./build.all.config"
   - script: ./build/travis_build.sh
     env:
-    - CONFIG_FILE="./build.all.config"
     - DOCKER_ARCH=arm64
+    - CONFIG_FILE="./build.all.config"
   - script: ./build/travis_build.sh
     env:
-    - CONFIG_FILE="./build.all.config"
     - DOCKER_ARCH=arm
+    - CONFIG_FILE="./build.all.config"
 
   - stage: Manifest iobroker
     script: ./build/travis_manifest.sh
