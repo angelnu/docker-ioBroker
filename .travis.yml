@@ -13,6 +13,7 @@ env:
 
 script:
 - ./build/travis_build.sh
+- CONFIG_FILE:="./build.all.config" ./build/travis_build.sh
 
 jobs:
   include:
@@ -20,4 +21,5 @@ jobs:
   - stage: Manifest
     script:
     - ./build/travis_manifest.sh
+    - CONFIG_FILE:="./build.all.config" ./build/travis_manifest.sh
     env:

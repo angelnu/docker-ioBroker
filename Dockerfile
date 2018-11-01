@@ -32,12 +32,6 @@ RUN mkdir -p /opt/iobroker/
 WORKDIR /opt/iobroker/
 RUN npm install iobroker --unsafe-perm
 
-#Install adapters listed by adapters2install.json and add admin
-ADD adapters2install.json adapters2install.json
-RUN mv package.json package.json.org && \
-    cp -a adapters2install.json package.json && \
-    npm install --production --save --unsafe-perm --prefix /opt/iobroker
-
 ADD scripts/* /usr/local/bin/
 
 #Delete data folder so it gets generated on the first boot
