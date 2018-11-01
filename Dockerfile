@@ -20,7 +20,8 @@ RUN apt-get update && apt-get install -y \
       bash python \
       git \
       make gcc g++ python udev \
-      tzdata && \
+      tzdata \
+      cifs-tools && \
       apt-get -y clean all
 
 #Update npmjs
