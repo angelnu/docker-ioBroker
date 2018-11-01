@@ -34,12 +34,6 @@ RUN npm install iobroker --unsafe-perm
 
 ADD scripts/* /usr/local/bin/
 
-#Delete data folder so it gets generated on the first boot
-#This is needed in order to associate the instances to the correct hostname
-#I would have preferred to build the container with hostname=iobroker but this
-#does not seem to be possible
-RUN rm -rf iobroker-data/*
-
 #Adding the line bellow results in a LOT of copies when starting the container
 #VOLUME /opt/iobroker
 

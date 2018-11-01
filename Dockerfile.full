@@ -13,6 +13,12 @@ RUN mv package.json package.json.org && \
     cp -a adapters2install.json package.json && \
     npm install --production --save --unsafe-perm --prefix /opt/iobroker
 
+#Delete data folder so it gets generated on the first boot
+#This is needed in order to associate the instances to the correct hostname
+#I would have preferred to build the container with hostname=iobroker but this
+#does not seem to be possible
+RUN rm -rf iobroker-data/*
+
 EXPOSE 8081 8082 8083 8084
 ENTRYPOINT ["run.sh"]
 CMD ["start"]
