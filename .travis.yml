@@ -5,21 +5,34 @@ services:
 
 language: bash
 
-env:
-  matrix:
-  - DOCKER_ARCH=amd64
-  - DOCKER_ARCH=arm64
-  - DOCKER_ARCH=arm
-
-script:
-- ./build/travis_build.sh
-- CONFIG_FILE:="./build.all.config" ./build/travis_build.sh
-
 jobs:
   include:
+  - stage: Build iobroker
+    script:
+    - ./build/travis_build.sh
+  env:
+    matrix:
+    - DOCKER_ARCH=amd64
+    - DOCKER_ARCH=arm64
+    - DOCKER_ARCH=arm
 
-  - stage: Manifest
+  - stage: Build iobroker full
+    script:
+    - ./build/travis_build.sh
+  env:
+    CONFIG_FILE:="./build.all.config"
+    matrix:
+    - DOCKER_ARCH=amd64
+    - DOCKER_ARCH=arm64
+    - DOCKER_ARCH=arm
+
+  - stage: Manifest iobroker
     script:
     - ./build/travis_manifest.sh
-    - CONFIG_FILE:="./build.all.config" ./build/travis_manifest.sh
     env:
+
+  - stage: Manifest iobroker-full
+    script:
+    -  ./build/travis_manifest.sh
+    env:
+    - CONFIG_FILE:="./build.all.config"
