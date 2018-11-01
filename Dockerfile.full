@@ -4,8 +4,6 @@ FROM $BASE
 ARG arch=arm
 ENV ARCH=$arch
 
-COPY qemu/qemu-$ARCH-static* /usr/bin/
-
 # inspired by https://github.com/iobroker/docker-iobroker
 MAINTAINER Vegetto <git@angelnu.com>
 
