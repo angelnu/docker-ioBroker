@@ -20,7 +20,7 @@ jobs:
     script:
     - ./build/travis_build.sh
   env:
-    CONFIG_FILE:="./build.all.config"
+    CONFIG_FILE="./build.all.config"
     matrix:
     - DOCKER_ARCH=amd64
     - DOCKER_ARCH=arm64
@@ -35,4 +35,4 @@ jobs:
     script:
     -  ./build/travis_manifest.sh
     env:
-    - CONFIG_FILE:="./build.all.config"
+    - CONFIG_FILE="./build.all.config"
