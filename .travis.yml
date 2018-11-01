@@ -7,8 +7,7 @@ language: bash
 
 jobs:
   include:
-  - stage: iobroker
-    name: Build iobroker
+  - stage: Build iobroker
     script:
     - DOCKER_ARCH=amd64 ./build/travis_build.sh
   - script:
@@ -16,26 +15,18 @@ jobs:
   - script:
     - DOCKER_ARCH=arm   ./build/travis_build.sh
 
-  - stage: iobroker-full
-    name: Build iobroker full
-    env:
-    - CONFIG_FILE="./build.all.config"
+  - stage: Build iobroker full
     script:
-    - DOCKER_ARCH=amd64 ./build/travis_build.sh
+    - CONFIG_FILE="./build.all.config" DOCKER_ARCH=amd64 ./build/travis_build.sh
   - script:
-    - DOCKER_ARCH=arm64 ./build/travis_build.sh
+    - CONFIG_FILE="./build.all.config" DOCKER_ARCH=arm64 ./build/travis_build.sh
   - script:
-    - DOCKER_ARCH=arm   ./build/travis_build.sh
+    - CONFIG_FILE="./build.all.config" DOCKER_ARCH=arm   ./build/travis_build.sh
 
-  - stage: manifest
-    name: Manifest iobroker
+  - stage: Manifest iobroker
     script:
     - ./build/travis_manifest.sh
-    env:
 
-  - stage: Manifest-full
-    name: Manifest iobroker-full
+  - stage: Manifest iobroker-full
     script:
-    -  ./build/travis_manifest.sh
-    env:
-    - CONFIG_FILE="./build.all.config"
+    -  CONFIG_FILE="./build.all.config" ./build/travis_manifest.sh
