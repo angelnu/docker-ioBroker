@@ -10,6 +10,7 @@ jobs:
   - stage: Build iobroker
     script:
     - DOCKER_ARCH=amd64 ./build/travis_build.sh
+    env: DOCKER_ARCH=amd64
   - script:
     - DOCKER_ARCH=arm64 ./build/travis_build.sh
   - script:
