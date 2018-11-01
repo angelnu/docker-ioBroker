@@ -11,10 +11,11 @@ jobs:
     name: Build iobroker
     script:
     - ./build/travis_build.sh
-    matrix:
-    - DOCKER_ARCH=amd64
-    - DOCKER_ARCH=arm64
-    - DOCKER_ARCH=arm
+    env:
+      matrix:
+      - DOCKER_ARCH=amd64
+      - DOCKER_ARCH=arm64
+      - DOCKER_ARCH=arm
 
   - stage: iobroker-full
     name: Build iobroker full
