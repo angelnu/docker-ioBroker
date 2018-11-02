@@ -17,7 +17,7 @@ RUN mv package.json package.json.org && \
 #This is needed in order to associate the instances to the correct hostname
 #I would have preferred to build the container with hostname=iobroker but this
 #does not seem to be possible
-RUN rm -rf iobroker-data/*
+RUN rm -rf /opt/iobroker/iobroker-data/*
 
 #The iobroker_data has to be preserved across updates
 VOLUME /opt/iobroker/iobroker-data
