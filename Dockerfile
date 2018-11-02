@@ -41,7 +41,7 @@ ADD scripts/* /usr/local/bin/
 #VOLUME /opt/iobroker
 
 #The iobroker_data has to be preserved across updates
-VOLUME /opt/iobroker/iobroker-data
+#VOLUME /opt/iobroker/iobroker-data
 
 EXPOSE 8081 8082 8083 8084
 ENTRYPOINT ["run.sh"]
