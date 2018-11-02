@@ -2,7 +2,8 @@
 
 IOBROKER_CMD="node node_modules/iobroker.js-controller/controller.js $*"
 
-echo "Set localtime"
+echo "Locatime is $TZ"
+
 cp -av /etc/localtime_host /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
 

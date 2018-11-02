@@ -4,6 +4,8 @@ FROM $BASE
 ARG arch=arm
 ENV ARCH=$arch
 
+ENV TZ=Europe/Berlin
+
 COPY qemu/qemu-$ARCH-static* /usr/bin/
 
 # inspired by https://github.com/iobroker/docker-iobroker
