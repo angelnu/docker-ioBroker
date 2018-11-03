@@ -55,8 +55,6 @@ spec:
         volumeMounts:
         - mountPath: /opt/iobroker/iobroker-data
           name: iobroker-volume
-        - mountPath: /etc/localtime_host
-          name: localtime-volume
         securityContext:
           capabilities:
             add:
@@ -67,10 +65,6 @@ spec:
           glusterfs:
             endpoints: glusterfs-storage
             path: iobroker
-        - name: localtime-volume
-          hostPath:
-            path: /etc/localtime
-            type: File
         #- name: logs
         #  emptyDir: {}
 

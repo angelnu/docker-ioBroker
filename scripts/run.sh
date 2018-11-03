@@ -3,14 +3,12 @@
 IOBROKER_CMD="node node_modules/iobroker.js-controller/controller.js $*"
 
 echo "Locatime is $TZ"
-
-cp -av /etc/localtime_host /etc/localtime
-dpkg-reconfigure -f noninteractive tzdata
+date
 
 echo "Execute setup"
 ./iobroker setup
 
-if [ n$1 == nbash ]; then
+if [ "n$1" == "nbash" ]; then
   echo "Starting shell"
   $*
   exit $?

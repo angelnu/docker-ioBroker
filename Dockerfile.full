@@ -19,9 +19,6 @@ RUN mv package.json package.json.org && \
 #does not seem to be possible
 RUN rm -rf /opt/iobroker/iobroker-data/*
 
-#The iobroker_data has to be preserved across updates
-VOLUME /opt/iobroker/iobroker-data
-
 EXPOSE 8081 8082 8083 8084
 ENTRYPOINT ["run.sh"]
 CMD ["start"]
