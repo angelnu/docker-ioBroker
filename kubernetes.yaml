@@ -40,6 +40,10 @@ spec:
         - containerPort: 8087 #original SimpleAPI
         - containerPort: 30000 #hrpc.0
         - containerPort: 30001 #hrpc.1
+        - containerPort: 30002 #hrpc.2
+        - containerPort: 30003 #hrpc.3
+        - containerPort: 30004 #hrpc.4
+        - containerPort: 30005 #hrpc.5
         - containerPort: 30081 #Reconfigured admin
         - containerPort: 30082 #Reconfigured vis
         - containerPort: 30087 #Reconfigured SimpleAPI
@@ -100,6 +104,14 @@ spec:
   - name: rfdclient1
     port: 30001
     nodePort: 30001
+  - name: rfdclient2
+    port: 30002
+  - name: rfdclient3
+    port: 30003
+  - name: rfdclient4
+    port: 30004
+  - name: rfdclient5
+    port: 30005
   - name: admin-org
     port: 8081
     targetPort: 8081
