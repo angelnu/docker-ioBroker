@@ -18,6 +18,9 @@ spec:
         app: iobroker
     spec:
       hostname: iobroker
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
       containers:
       - name: iobroker
         image: angelnu/iobroker:full-latest
