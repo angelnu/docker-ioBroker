@@ -12,16 +12,18 @@ COPY qemu/qemu-$ARCH-static* /usr/bin/
 MAINTAINER Vegetto <git@angelnu.com>
 
 # Install required dependencies for the adapters
+# See: https://github.com/ioBroker/ioBroker/wiki/Installation
 # git: needed to download beta adapters
 # avahi-dev: needed by mdns (iobroker.chromecast)
 # make gcc g++ python linux-headers udev: needed by serialport (iobroker.discovery) - https://www.npmjs.com/package/serialport#platform-support
 #RUN apk add --no-cache \
 #      build-base avahi-dev linux-headers \
 RUN apt-get update && apt-get install -y \
-      libavahi-compat-libdnssd-dev 'linux-headers-*' vim \
-      bash python \
+      build-essential libavahi-compat-libdnssd-dev libudev-dev libpam0g-dev \
+      #libavahi-compat-libdnssd-dev 'linux-headers-*' \
+      vim bash python \
       git \
-      make gcc g++ python udev \
+      #make gcc g++ python udev \
       tzdata \
       cifs-utils && \
       apt-get -y clean all
@@ -31,9 +33,7 @@ RUN npm config set unsafe-perm true #See https://github.com/npm/uid-number/issue
 RUN npm install -g npm@latest
 
 # Install base iobroker
-RUN mkdir -p /opt/iobroker/
-WORKDIR /opt/iobroker/
-RUN npm install iobroker --unsafe-perm
+RUN curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | bash -
 
 ADD scripts/* /usr/local/bin/
 
