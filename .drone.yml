@@ -22,6 +22,8 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
+  - pwd
+  - ls -R
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
