@@ -16,7 +16,6 @@ steps:
   image: docker
   environment:
     DOCKER_ARCH: amd64
-    DOCKER_HOST: tcp://docker:2375
     DOCKER_USER:
       from_secret: DOCKER_USER
     DOCKER_PASS:
