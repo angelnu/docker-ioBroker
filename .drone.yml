@@ -20,6 +20,9 @@ steps:
       from_secret: DOCKER_USER
     password:
       from_secret: DOCKER_PASS
+  commands:
+  - pwd
+  - env
 
 - name: build
   image: docker
