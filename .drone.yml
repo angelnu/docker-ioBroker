@@ -1,0 +1,95 @@
+---
+kind: pipeline
+name: amd
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: build
+  image: docker
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    DOCKER_ARCH: amd64
+    DOCKER_USER:
+      from_secret: DOCKER_USER
+    DOCKER_PASS:
+      from_secret: DOCKER_PASS
+  commands:
+  - ./cicd_build.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+
+---
+kind: pipeline
+name: arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: build
+  image: docker
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    DOCKER_ARCH: arm
+    DOCKER_USER:
+      from_secret: DOCKER_USER
+    DOCKER_PASS:
+      from_secret: DOCKER_PASS
+  commands:
+  - ./cicd_build.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+
+---
+kind: pipeline
+name: arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: build
+  image: docker
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    DOCKER_ARCH: arm64
+    DOCKER_USER:
+      from_secret: DOCKER_USER
+    DOCKER_PASS:
+      from_secret: DOCKER_PASS
+  commands:
+  - ./cicd_build.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+
+---
+kind: pipeline
+name: manifest
+
+platform:
+  os: linux
+  arch: amd64
+
+depends_on:
+- amd
+- arm
+- arm64
+
+steps:
+- name: build
+  image: docker
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    DOCKER_USER:
+      from_secret: DOCKER_USER
+    DOCKER_PASS:
+      from_secret: DOCKER_PASS
+  commands:
+  - ./cicd_manifest.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
