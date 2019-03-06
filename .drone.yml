@@ -7,6 +7,11 @@ platform:
   arch: amd64
 
 steps:
+- name: submodules
+  image: docker:git
+  commands:
+  - git submodule update --recursive --remote
+
 - name: build
   image: docker
   environment:
@@ -17,7 +22,6 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - git submodule update --recursive --remote
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
@@ -30,6 +34,11 @@ platform:
   arch: arm
 
 steps:
+- name: submodules
+  image: docker:git
+  commands:
+  - git submodule update --recursive --remote
+
 - name: build
   image: docker
   environment:
@@ -40,7 +49,6 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - git submodule update --recursive --remote
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
@@ -53,6 +61,11 @@ platform:
   arch: arm64
 
 steps:
+- name: submodules
+  image: docker:git
+  commands:
+  - git submodule update --recursive --remote
+
 - name: build
   image: docker
   environment:
@@ -63,7 +76,6 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - git submodule update --recursive --remote
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
@@ -81,6 +93,11 @@ depends_on:
 - arm64
 
 steps:
+- name: submodules
+  image: docker:git
+  commands:
+  - git submodule update --recursive --remote
+
 - name: build
   image: docker
   environment:
@@ -90,6 +107,5 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - git submodule update --recursive --remote
   - ./build/cicd_manifest.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_manifest.sh
