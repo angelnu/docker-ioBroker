@@ -36,7 +36,7 @@ steps:
   - pwd
   - env
   - ls -Rl
-  - /usr/local/bin/dockerd-entrypoint.sh
+  - sudo /usr/local/bin/dockerd-entrypoint.sh
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
