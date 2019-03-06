@@ -17,8 +17,8 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - ./cicd_build.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+  - ./build/cicd_build.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
 ---
 kind: pipeline
@@ -39,8 +39,8 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - ./cicd_build.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+  - ./build/cicd_build.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
 ---
 kind: pipeline
@@ -61,8 +61,8 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - ./cicd_build.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+  - ./build/cicd_build.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
 ---
 kind: pipeline
@@ -87,5 +87,5 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
-  - ./cicd_manifest.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./cicd_build.sh
+  - ./build/cicd_manifest.sh
+  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_manifest.sh
