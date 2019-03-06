@@ -25,7 +25,7 @@ steps:
   - env
 
 - name: build
-  image: docker
+  image: plugins/docker
   environment:
     DOCKER_ARCH: amd64
     DOCKER_USER:
