@@ -5,6 +5,11 @@ name: amd
 platform:
   os: linux
   arch: amd64
+  
+clone:
+  git:
+    image: plugins/git
+    recursive: true
 
 steps:
 - name: submodules
