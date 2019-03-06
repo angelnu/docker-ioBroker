@@ -12,6 +12,15 @@ steps:
   commands:
   - git submodule update --init --recursive
 
+- name: docker
+  image: plugins/docker
+  settings:
+    repo: foo/bar
+    username:
+      from_secret: DOCKER_USER
+    password:
+      from_secret: DOCKER_PASS
+
 - name: build
   image: docker
   environment:
