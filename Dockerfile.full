@@ -12,8 +12,7 @@ ARG adapters="backitup chromecast daikin dwd feiertage flot fritzdect google-sha
               icons-mfd-png icons-mfd-svg icons-open-icon-library-png icons-ultimate-png \
               influxdb iot javascript material mobile openhab rickshaw sayit scenes simple-api \
               vis vis-bars vis-canvas-gauges vis-colorpicker vis-fancyswitch vis-google-fonts vis-history vis-hqwidgets \
-              vis-jqui-mfd vis-justgage vis-lcars vis-map vis-material vis-metro vis-players vis-timeandweather vis-weather \
-              web"
+              vis-jqui-mfd vis-justgage vis-lcars vis-map vis-material vis-metro vis-players vis-timeandweather vis-weather"
 
 #Install adapters
 RUN for adapter in ${adapters}; do iobroker install $adapter; done
