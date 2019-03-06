@@ -17,6 +17,7 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
+  - git submodule update --recursive --remote
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
@@ -39,6 +40,7 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
+  - git submodule update --recursive --remote
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
@@ -61,6 +63,7 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
+  - git submodule update --recursive --remote
   - ./build/cicd_build.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
 
@@ -87,5 +90,6 @@ steps:
     DOCKER_PASS:
       from_secret: DOCKER_PASS
   commands:
+  - git submodule update --recursive --remote
   - ./build/cicd_manifest.sh
   - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_manifest.sh
