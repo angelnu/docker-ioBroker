@@ -22,18 +22,24 @@ RUN apt-get update && apt-get install -y \
       build-essential libavahi-compat-libdnssd-dev libudev-dev libpam0g-dev \
       #libavahi-compat-libdnssd-dev 'linux-headers-*' \
       vim bash python \
+      libcap2-bin \
       git \
       #make gcc g++ python udev \
       tzdata \
       cifs-utils && \
-      apt-get -y clean all
+    # npm config set unsafe-perm true && \ #See https://github.com/npm/uid-number/issues/3
+    # npm install -g npm@latest && \
+    curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | sed -e 's/,cap_net_admin//g' | bash - && \
+    apt-get -y clean all
 
 #Update npmjs
-RUN npm config set unsafe-perm true #See https://github.com/npm/uid-number/issues/3
-RUN npm install -g npm@latest
+#RUN setcap cap_net_raw+ep /usr/local/bin/node;
+#RUN npm config set unsafe-perm true #See https://github.com/npm/uid-number/issues/3
+#RUN npm install -g npm@latest
+#RUN setcap cap_net_raw+ep /usr/local/bin/node;
 
 # Install base iobroker
-RUN curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | bash -
+#RUN curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | sed -e 's/cap_net_raw,/cap_net_raw+ip,/g' | bash -
 
 ADD scripts/* /usr/local/bin/
 

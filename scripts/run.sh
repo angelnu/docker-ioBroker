@@ -1,14 +1,16 @@
 #!/usr/bin/env sh
 
+cd /opt/iobroker
+
 IOBROKER_CMD="node node_modules/iobroker.js-controller/controller.js $*"
 
 echo "Locatime is $TZ"
 date
 
 echo "Execute setup"
-./iobroker setup
+iobroker setup
 
-if [ "n$1" == "nbash" ]; then
+if [ "n$1" = "nbash" ]; then
   echo "Starting shell"
   $*
   exit $?

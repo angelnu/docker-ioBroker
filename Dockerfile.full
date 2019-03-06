@@ -7,17 +7,13 @@ ENV ARCH=$arch
 # inspired by https://github.com/iobroker/docker-iobroker
 MAINTAINER Vegetto <git@angelnu.com>
 
-#Install adapters listed by adapters2install.json and add admin
-ADD adapters2install.json adapters2install.json
-RUN cp -a adapters2install.json package.json && \
-    npm install --production --save --unsafe-perm --prefix /opt/iobroker
+ARG adapters="backitup chromecast daikin dwd feiertage flot fritzdect google-sharedlocations harmony history hm-rega hm-rpc \
+              icons-addictive-flavour-png icons-fatcow-hosting icons-icons8 icons-material-png icons-material-svg \
+              icons-mfd-png icons-mfd-svg icons-open-icon-library-png icons-ultimate-png \
+              influxdb iot javascript material mobile openhab rickshaw sayit scenes simple-api \
+              vis vis-bars vis-canvas-gauges vis-colorpicker vis-fancyswitch vis-google-fonts vis-history vis-hqwidgets \
+              vis-jqui-mfd vis-justgage vis-lcars vis-map vis-material vis-metro vis-players vis-timeandweather vis-weather \
+              web"
 
-#Delete data folder so it gets generated on the first boot
-#This is needed in order to associate the instances to the correct hostname
-#I would have preferred to build the container with hostname=iobroker but this
-#does not seem to be possible
-RUN rm -rf /opt/iobroker/iobroker-data/*
-
-EXPOSE 8081 8082 8083 8084
-ENTRYPOINT ["run.sh"]
-CMD ["start"]
+#Install adapters
+RUN for adapter in ${adapters}; do iobroker install $adapter; done
