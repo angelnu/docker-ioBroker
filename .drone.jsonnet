@@ -55,12 +55,22 @@ local Build_Pipeline(arch) = {
     },
     {
       "name": "iobroker_installer_checksum",
-      "image": "ubuntu",
+      "image": "alpine",
       "commands": [
         "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum",
         "rm .build/iobroker-stable.zip",
       ]
     },
+    /* {
+      "name": "iobroker_npm_versions",
+      "image": "node:current-alpine",
+      "commands": [
+        "rm -f .build/iobroker.adapters",
+        "for pkg in backitup chromecast daikin dwd feiertage flot fritzdect google-sharedlocations harmony history hm-rega hm-rpc; do
+          echo \"$$pkg $(npm show iobroker.$pkg version)\">> .build/iobroker.adapters
+        done",
+      ]
+    }, */
     Build_Docker_Step(arch, ""),
     Build_Docker_Step(arch, "full-"),
   ],

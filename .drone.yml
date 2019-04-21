@@ -19,7 +19,7 @@ steps:
     source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
 
 - name: iobroker_installer_checksum
-  image: ubuntu
+  image: alpine
   commands:
   - "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum"
   - rm .build/iobroker-stable.zip
@@ -87,7 +87,7 @@ steps:
     source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
 
 - name: iobroker_installer_checksum
-  image: ubuntu
+  image: alpine
   commands:
   - "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum"
   - rm .build/iobroker-stable.zip
@@ -155,7 +155,7 @@ steps:
     source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
 
 - name: iobroker_installer_checksum
-  image: ubuntu
+  image: alpine
   commands:
   - "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum"
   - rm .build/iobroker-stable.zip
