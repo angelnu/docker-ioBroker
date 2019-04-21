@@ -53,6 +53,7 @@ local Build_Pipeline(arch) = {
 local Manifest_Step(prefix, tag) = {
   "name": "manifest_" + prefix + tag,
   "image": "plugins/manifest:1",
+  "group": "manifest",
   "settings": {
     "username": {
       "from_secret": "DOCKER_USER"
@@ -74,6 +75,11 @@ local Manifest_Step(prefix, tag) = {
 local Manifest_Pipeline() = {
   "kind": "pipeline",
   "name": "build_manifest",
+  depends_on: [
+    "build-amd64",
+    "build-arm",
+    "build-arm64",
+  ],
   "steps": [
     Manifest_Step("", "${DRONE_BRANCH}-${DRONE_COMMIT}"),
     Manifest_Step("", "${DRONE_BRANCH}"),
