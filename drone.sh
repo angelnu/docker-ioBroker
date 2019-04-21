@@ -1,5 +1,11 @@
 #!/bin/sh -e
-# This builds
+# This updates .drone.yml from .drone.jsonnet and triggers a dev build
+#
+# It requires the drone.io cli to be installed and a secrets.yml in this folder
+# with the following content:
+# DOCKER_USER: <docker user>
+# DOCKER_PASS: <docker password>
+
 GIT_BRANCH=master
 GIT_COMMIT=dev
 
