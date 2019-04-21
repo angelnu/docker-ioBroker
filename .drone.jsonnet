@@ -76,9 +76,9 @@ local Manifest_Pipeline() = {
   "kind": "pipeline",
   "name": "build_manifest",
   depends_on: [
-    "build-amd64",
-    "build-arm",
-    "build-arm64",
+    "build_amd64",
+    "build_arm",
+    "build_arm64",
   ],
   "steps": [
     Manifest_Step("", "${DRONE_BRANCH}-${DRONE_COMMIT}"),

@@ -266,8 +266,8 @@ steps:
       from_secret: DOCKER_USER
 
 depends_on:
-- build-amd64
-- build-arm
-- build-arm64
+- build_amd64
+- build_arm
+- build_arm64
 
 ...
