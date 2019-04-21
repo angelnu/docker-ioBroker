@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-name: amd
+name: build_amd64
 
 platform:
   os: linux
@@ -10,39 +10,53 @@ steps:
 - name: submodules
   image: docker:git
   commands:
-  - git submodule update --init --recursive
+  - "test -e build/build.sh || git submodule update --init --recursive"
 
 - name: docker
   image: plugins/docker
   settings:
-    repo: foo/bar
-    username:
-      from_secret: DOCKER_USER
+    build_args:
+    - BASE=node:10-stretch
+    - arch=amd64
+    cache_from:
+    - angelnu/iobroker:master-amd64
+    - "angelnu/iobroker:${DRONE_BRANCH}-amd64"
+    - "angelnu/iobroker:${DRONE_BRANCH}-amd64"
     password:
       from_secret: DOCKER_PASS
-  commands:
-  - pwd
-  - env
-
-- name: build
-  image: plugins/docker
-  environment:
-    DOCKER_ARCH: amd64
-    DOCKER_USER:
+    repo: angelnu/iobroker
+    tags:
+    - "${DRONE_BRANCH}-${DRONE_COMMIT}-amd64"
+    - "${DRONE_BRANCH}-amd64"
+    - latest-amd64
+    target: iobroker
+    username:
       from_secret: DOCKER_USER
-    DOCKER_PASS:
+
+- name: full-docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=amd64
+    cache_from:
+    - angelnu/iobroker:full-master-amd64
+    - "angelnu/iobroker:full-${DRONE_BRANCH}-amd64"
+    - "angelnu/iobroker:${DRONE_BRANCH}-amd64"
+    password:
       from_secret: DOCKER_PASS
-  commands:
-  - pwd
-  - env
-  - ls -Rl
-  - sudo /usr/local/bin/dockerd-entrypoint.sh
-  - ./build/cicd_build.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
+    repo: angelnu/iobroker
+    tags:
+    - "full-${DRONE_BRANCH}-${DRONE_COMMIT}-amd64"
+    - "full-${DRONE_BRANCH}-amd64"
+    - full-latest-amd64
+    target: full-iobroker
+    username:
+      from_secret: DOCKER_USER
 
 ---
 kind: pipeline
-name: arm
+name: build_arm
 
 platform:
   os: linux
@@ -52,24 +66,53 @@ steps:
 - name: submodules
   image: docker:git
   commands:
-  - git submodule update --init --recursive
+  - "test -e build/build.sh || git submodule update --init --recursive"
 
-- name: build
-  image: docker
-  environment:
-    DOCKER_ARCH: arm
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_USER:
-      from_secret: DOCKER_USER
-    DOCKER_PASS:
+- name: docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=arm
+    cache_from:
+    - angelnu/iobroker:master-arm
+    - "angelnu/iobroker:${DRONE_BRANCH}-arm"
+    - "angelnu/iobroker:${DRONE_BRANCH}-arm"
+    password:
       from_secret: DOCKER_PASS
-  commands:
-  - ./build/cicd_build.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
+    repo: angelnu/iobroker
+    tags:
+    - "${DRONE_BRANCH}-${DRONE_COMMIT}-arm"
+    - "${DRONE_BRANCH}-arm"
+    - latest-arm
+    target: iobroker
+    username:
+      from_secret: DOCKER_USER
+
+- name: full-docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=arm
+    cache_from:
+    - angelnu/iobroker:full-master-arm
+    - "angelnu/iobroker:full-${DRONE_BRANCH}-arm"
+    - "angelnu/iobroker:${DRONE_BRANCH}-arm"
+    password:
+      from_secret: DOCKER_PASS
+    repo: angelnu/iobroker
+    tags:
+    - "full-${DRONE_BRANCH}-${DRONE_COMMIT}-arm"
+    - "full-${DRONE_BRANCH}-arm"
+    - full-latest-arm
+    target: full-iobroker
+    username:
+      from_secret: DOCKER_USER
 
 ---
 kind: pipeline
-name: arm64
+name: build_arm64
 
 platform:
   os: linux
@@ -79,48 +122,147 @@ steps:
 - name: submodules
   image: docker:git
   commands:
-  - git submodule update --init --recursive
+  - "test -e build/build.sh || git submodule update --init --recursive"
 
-- name: build
-  image: docker
-  environment:
-    DOCKER_ARCH: arm64
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_USER:
-      from_secret: DOCKER_USER
-    DOCKER_PASS:
+- name: docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=arm64
+    cache_from:
+    - angelnu/iobroker:master-arm64
+    - "angelnu/iobroker:${DRONE_BRANCH}-arm64"
+    - "angelnu/iobroker:${DRONE_BRANCH}-arm64"
+    password:
       from_secret: DOCKER_PASS
-  commands:
-  - ./build/cicd_build.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_build.sh
+    repo: angelnu/iobroker
+    tags:
+    - "${DRONE_BRANCH}-${DRONE_COMMIT}-arm64"
+    - "${DRONE_BRANCH}-arm64"
+    - latest-arm64
+    target: iobroker
+    username:
+      from_secret: DOCKER_USER
+
+- name: full-docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=arm64
+    cache_from:
+    - angelnu/iobroker:full-master-arm64
+    - "angelnu/iobroker:full-${DRONE_BRANCH}-arm64"
+    - "angelnu/iobroker:${DRONE_BRANCH}-arm64"
+    password:
+      from_secret: DOCKER_PASS
+    repo: angelnu/iobroker
+    tags:
+    - "full-${DRONE_BRANCH}-${DRONE_COMMIT}-arm64"
+    - "full-${DRONE_BRANCH}-arm64"
+    - full-latest-arm64
+    target: full-iobroker
+    username:
+      from_secret: DOCKER_USER
 
 ---
 kind: pipeline
-name: manifest
+name: build_manifest
 
 platform:
   os: linux
   arch: amd64
 
-depends_on:
-- amd
-- arm
-- arm64
-
 steps:
-- name: submodules
-  image: docker:git
-  commands:
-  - git submodule update --init --recursive
-
-- name: build
-  image: docker
-  environment:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_USER:
-      from_secret: DOCKER_USER
-    DOCKER_PASS:
+- name: "manifest_${DRONE_BRANCH}-${DRONE_COMMIT}"
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
       from_secret: DOCKER_PASS
-  commands:
-  - ./build/cicd_manifest.sh
-  - TAG_PREFIX="full-" CONFIG_FILE="./build.all.config" ./build/cicd_manifest.sh
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
+    target: "angelnu/iobroker:${DRONE_BRANCH}-${DRONE_COMMIT}"
+    template: "angelnu/iobroker:${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH"
+    username:
+      from_secret: DOCKER_USER
+
+- name: "manifest_${DRONE_BRANCH}"
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: DOCKER_PASS
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
+    target: "angelnu/iobroker:${DRONE_BRANCH}"
+    template: "angelnu/iobroker:${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH"
+    username:
+      from_secret: DOCKER_USER
+
+- name: manifest_latest
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: DOCKER_PASS
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
+    target: angelnu/iobroker:latest
+    template: "angelnu/iobroker:${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH"
+    username:
+      from_secret: DOCKER_USER
+
+- name: "manifest_full-${DRONE_BRANCH}-${DRONE_COMMIT}"
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: DOCKER_PASS
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
+    target: "angelnu/iobroker:full-${DRONE_BRANCH}-${DRONE_COMMIT}"
+    template: "angelnu/iobroker:full-${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH"
+    username:
+      from_secret: DOCKER_USER
+
+- name: "manifest_full-${DRONE_BRANCH}"
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: DOCKER_PASS
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
+    target: "angelnu/iobroker:full-${DRONE_BRANCH}"
+    template: "angelnu/iobroker:full-${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH"
+    username:
+      from_secret: DOCKER_USER
+
+- name: manifest_full-latest
+  image: plugins/manifest:1
+  settings:
+    ignore_missing: true
+    password:
+      from_secret: DOCKER_PASS
+    platforms:
+    - linux/amd64
+    - linux/arm
+    - linux/arm64
+    target: angelnu/iobroker:full-latest
+    template: "angelnu/iobroker:full-${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH"
+    username:
+      from_secret: DOCKER_USER
+
+...

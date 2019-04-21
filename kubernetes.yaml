@@ -52,10 +52,10 @@ spec:
         - containerPort: 30087 #Reconfigured SimpleAPI
         livenessProbe:
           tcpSocket:
-            port: 30081
+            port: 30082
           initialDelaySeconds: 600 # 10 minutes
-          timeoutSeconds: 10
-          failureThreshold: 12 # 2 minutes
+          timeoutSeconds: 5
+          failureThreshold: 3 # 2 minutes
         env:
         - name: TZ
           value: Europe/Berlin

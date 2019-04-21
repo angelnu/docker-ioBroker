@@ -1,8 +1,5 @@
-ARG BASE=node:8-slim
+ARG BASE=angelnu/iobroker
 FROM $BASE
-
-ARG arch=arm
-ENV ARCH=$arch
 
 # inspired by https://github.com/iobroker/docker-iobroker
 MAINTAINER Vegetto <git@angelnu.com>
