@@ -39,11 +39,27 @@ local Build_Pipeline(arch) = {
   },
   steps: [
     {
-      name: 'submodules',
+      name: 'git_submodules',
       image: 'docker:git',
       commands: [
         'test -e build/build.sh || git submodule update --init --recursive',
       ],
+    },
+    {
+      "name": "iobroker_installer_download",
+      "image": "plugins/download",
+      "settings": {
+        "source": "https://github.com/ioBroker/ioBroker/archive/stable-installer.zip",
+        "destination": ".build/iobroker-stable.zip"
+      }
+    },
+    {
+      "name": "iobroker_installer_checksum",
+      "image": "ubuntu",
+      "commands": [
+        "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum",
+        "rm .build/iobroker-stable.zip",
+      ]
     },
     Build_Docker_Step(arch, ""),
     Build_Docker_Step(arch, "full-"),

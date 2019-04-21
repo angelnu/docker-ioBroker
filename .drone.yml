@@ -7,10 +7,22 @@ platform:
   arch: amd64
 
 steps:
-- name: submodules
+- name: git_submodules
   image: docker:git
   commands:
   - "test -e build/build.sh || git submodule update --init --recursive"
+
+- name: iobroker_installer_download
+  image: plugins/download
+  settings:
+    destination: .build/iobroker-stable.zip
+    source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
+
+- name: iobroker_installer_checksum
+  image: ubuntu
+  commands:
+  - "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum"
+  - rm .build/iobroker-stable.zip
 
 - name: docker
   image: plugins/docker
@@ -63,10 +75,22 @@ platform:
   arch: arm
 
 steps:
-- name: submodules
+- name: git_submodules
   image: docker:git
   commands:
   - "test -e build/build.sh || git submodule update --init --recursive"
+
+- name: iobroker_installer_download
+  image: plugins/download
+  settings:
+    destination: .build/iobroker-stable.zip
+    source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
+
+- name: iobroker_installer_checksum
+  image: ubuntu
+  commands:
+  - "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum"
+  - rm .build/iobroker-stable.zip
 
 - name: docker
   image: plugins/docker
@@ -119,10 +143,22 @@ platform:
   arch: arm64
 
 steps:
-- name: submodules
+- name: git_submodules
   image: docker:git
   commands:
   - "test -e build/build.sh || git submodule update --init --recursive"
+
+- name: iobroker_installer_download
+  image: plugins/download
+  settings:
+    destination: .build/iobroker-stable.zip
+    source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
+
+- name: iobroker_installer_checksum
+  image: ubuntu
+  commands:
+  - "md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum"
+  - rm .build/iobroker-stable.zip
 
 - name: docker
   image: plugins/docker

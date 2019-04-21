@@ -26,10 +26,13 @@ RUN apt-get update && apt-get install -y \
       cifs-utils && \
     # npm config set unsafe-perm true && \ #See https://github.com/npm/uid-number/issues/3
     # npm install -g npm@latest && \
-    curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | sed -e 's/,cap_net_admin//g' | bash - && \
     apt-get -y clean all
 
 ADD scripts/* /usr/local/bin/
+
+#Trigger build when iobroker package changes
+ADD .build/iobroker-stable.md5sum /tmp/
+RUN curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | sed -e 's/,cap_net_admin//g' | bash -
 
 #The iobroker_data has to be preserved across updates
 #VOLUME /opt/iobroker/iobroker-data
