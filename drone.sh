@@ -13,6 +13,7 @@ DRONE_OPTS="--secret-file secrets.yml \
            --branch $GIT_BRANCH \
            --event pull_request"
 export DRONE_COMMIT=$GIT_COMMIT
+export DRONE_BUILD_NUMBER=99999
 
 drone jsonnet --stream
 drone exec $DRONE_OPTS --pipeline build_amd64

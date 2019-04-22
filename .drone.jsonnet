@@ -4,7 +4,7 @@ local Build_Docker_Step(arch, prefix) = {
   settings: {
     repo: 'angelnu/iobroker',
     tags: [
-      prefix + "${DRONE_BRANCH}-${DRONE_COMMIT}-"+arch,
+      prefix + "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-"+arch,
       prefix + "${DRONE_BRANCH}-"+arch,
       prefix + "latest-"+arch,
     ],
@@ -89,7 +89,7 @@ local Manifest_Step(prefix, tag) = {
     },
     "target": "angelnu/iobroker:" + prefix + tag,
     "ignore_missing": true,
-    "template": "angelnu/iobroker:" + prefix + "${DRONE_BRANCH}-${DRONE_COMMIT}-ARCH",
+    "template": "angelnu/iobroker:" + prefix + "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-ARCH",
     "platforms": [
       "linux/amd64",
       "linux/arm",
@@ -107,10 +107,10 @@ local Manifest_Pipeline() = {
     "build_arm64",
   ],
   "steps": [
-    Manifest_Step("", "${DRONE_BRANCH}-${DRONE_COMMIT}"),
+    Manifest_Step("", "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"),
     Manifest_Step("", "${DRONE_BRANCH}"),
     Manifest_Step("", "latest"),
-    Manifest_Step("full-", "${DRONE_BRANCH}-${DRONE_COMMIT}"),
+    Manifest_Step("full-", "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"),
     Manifest_Step("full-", "${DRONE_BRANCH}"),
     Manifest_Step("full-", "latest")
   ]
