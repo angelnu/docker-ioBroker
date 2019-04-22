@@ -7,11 +7,6 @@ platform:
   arch: amd64
 
 steps:
-- name: git_submodules
-  image: docker:git
-  commands:
-  - "test -e build/build.sh || git submodule update --init --recursive"
-
 - name: iobroker_installer_download
   image: plugins/download
   settings:
@@ -75,11 +70,6 @@ platform:
   arch: arm
 
 steps:
-- name: git_submodules
-  image: docker:git
-  commands:
-  - "test -e build/build.sh || git submodule update --init --recursive"
-
 - name: iobroker_installer_download
   image: plugins/download
   settings:
@@ -143,11 +133,6 @@ platform:
   arch: arm64
 
 steps:
-- name: git_submodules
-  image: docker:git
-  commands:
-  - "test -e build/build.sh || git submodule update --init --recursive"
-
 - name: iobroker_installer_download
   image: plugins/download
   settings:

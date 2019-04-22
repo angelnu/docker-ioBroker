@@ -38,13 +38,13 @@ local Build_Pipeline(arch) = {
     arch: arch,
   },
   steps: [
-    {
+    /* {
       name: 'git_submodules',
       image: 'docker:git',
       commands: [
         'test -e build/build.sh || git submodule update --init --recursive',
       ],
-    },
+    }, */
     {
       "name": "iobroker_installer_download",
       "image": "plugins/download",
