@@ -52,3 +52,6 @@ ARG adapters="backitup chromecast daikin dwd feiertage flot fritzdect google-sha
 
 #Install adapters
 RUN for adapter in ${adapters}; do iobroker install $adapter; done
+
+#Currently this adapter is missing
+RUN iobroker url https://github.com/t4qjXH8N/ioBroker.google-sharedlocations.git
