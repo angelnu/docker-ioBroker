@@ -1,14 +1,13 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: iobroker
 spec:
+  serviceName: iobroker
   selector:
     matchLabels:
       app: iobroker
   replicas: 1
-  strategy:
-    type: Recreate
   template:
     metadata:
       name: iobroker
