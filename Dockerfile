@@ -1,7 +1,14 @@
 ARG BASE=node:10-stretch
 FROM $BASE as iobroker
 
-ENV TZ=Europe/Berlin
+ENV DEBIAN_FRONTEND="teletype" \
+	#LANG="de_DE.UTF-8" \
+	#LANGUAGE="de_DE:de" \
+	#LC_ALL="de_DE.UTF-8" \
+	TZ="Europe/Berlin" \
+	PACKAGES="nano" \
+	AVAHI="false" \
+  ZWAVE="false"
 
 #COPY qemu/qemu-*-static* /usr/bin/
 
@@ -16,16 +23,33 @@ MAINTAINER Vegetto <git@angelnu.com>
 #RUN apk add --no-cache \
 #      build-base avahi-dev linux-headers \
 RUN apt-get update && apt-get install -y \
-      apt-utils build-essential libavahi-compat-libdnssd-dev libudev-dev libpam0g-dev \
-      #libavahi-compat-libdnssd-dev 'linux-headers-*' \
-      vim bash python \
-      libcap2-bin \
-      git \
-      #make gcc g++ python udev \
-      tzdata \
+        acl \
+        apt-utils \
+        avahi-daemon \
+        bash \
+        build-essential \
+        curl \
+        git \
+        gnupg2 \
+        libavahi-compat-libdnssd-dev \
+        libcap2-bin \
+        libpam0g-dev \
+        libudev-dev \
+        locales \
+        procps \
+        python \
+        gosu \
+        tzdata \
+        unzip \
+        vim \
+        wget \
       cifs-utils && \
-    # npm config set unsafe-perm true && \ #See https://github.com/npm/uid-number/issues/3
-    # npm install -g npm@latest && \
+    npm config set unsafe-perm true && \ #See https://github.com/npm/uid-number/issues/3
+    npm install -g node-gyp && \
+    echo "Configuring avahi-daemon..." && \
+    sed -i '/^rlimit-nproc/s/^\(.*\)/#\1/g' /etc/avahi/avahi-daemon.conf && \
+    echo "Configuring dbus..." && \
+    mkdir /var/run/dbus/ && \
     apt-get -y clean all
 
 ADD scripts/* /usr/local/bin/

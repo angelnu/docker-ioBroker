@@ -19,6 +19,16 @@ fi
 #Upload files in background
 upload.sh &
 
+# Checking for and setting up avahi-daemon
+if [ "$avahi" = "true" ]
+then
+  echo "Starting dbus..."
+  dbus-daemon --system
+
+  echo "Starting avahi-daemon..."
+  /etc/init.d/avahi-daemon start
+fi
+
 #Start with PID 1
 echo "$IOBROKER_CMD"
 exec $IOBROKER_CMD
