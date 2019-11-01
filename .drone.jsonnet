@@ -1,8 +1,11 @@
+local repo = 'angelnu/iobroker';
+local base_img = 'node:12-stretch';
+
 local Build_Docker_Step(arch, prefix) = {
   name: prefix + 'docker',
   image: 'plugins/docker',
   settings: {
-    repo: 'angelnu/iobroker',
+    repo: repo,
     tags: [
       prefix + "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-"+arch,
       prefix + "${DRONE_BRANCH}-"+arch,
@@ -10,11 +13,14 @@ local Build_Docker_Step(arch, prefix) = {
     ],
     cache_from: [
       #docker cache
-      "angelnu/iobroker:" + prefix + "master-"+arch,
-      "angelnu/iobroker:" + prefix + "${DRONE_BRANCH}-"+arch,
+      repo + ":" + prefix + "master-"+arch,
+      repo + ":" + prefix + "${DRONE_BRANCH}-"+arch,
 
       #previous build step
-      "angelnu/iobroker:" + "${DRONE_BRANCH}-"+arch
+      repo + ":" + "${DRONE_BRANCH}-"+arch,
+
+      #Base repo
+      base_img
     ],
     target: prefix + "iobroker",
     username: {
@@ -24,7 +30,7 @@ local Build_Docker_Step(arch, prefix) = {
       from_secret: 'DOCKER_PASS'
     },
     build_args: [
-      'BASE=node:10-stretch',
+      'BASE='+base_img,
       'arch='+arch,
     ],
   }
