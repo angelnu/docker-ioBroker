@@ -7,8 +7,7 @@ ENV DEBIAN_FRONTEND="teletype" \
 	#LC_ALL="de_DE.UTF-8" \
 	TZ="Europe/Berlin" \
 	PACKAGES="nano" \
-	AVAHI="false" \
-  ZWAVE="false"
+	AVAHI="false"
 
 #COPY qemu/qemu-*-static* /usr/bin/
 
@@ -44,7 +43,8 @@ RUN apt-get update && apt-get install -y \
         vim \
         wget \
       cifs-utils && \
-    npm config set unsafe-perm true && \ #See https://github.com/npm/uid-number/issues/3
+    #See https://github.com/npm/uid-number/issues/3
+    npm config set unsafe-perm true && \
     npm install -g node-gyp && \
     echo "Configuring avahi-daemon..." && \
     sed -i '/^rlimit-nproc/s/^\(.*\)/#\1/g' /etc/avahi/avahi-daemon.conf && \
