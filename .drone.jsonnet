@@ -1,6 +1,6 @@
 local repo = 'angelnu/iobroker';
 local base_img = 'node:12-stretch';
-local no_cache = true;
+local no_cache = false;
 
 local Build_Docker_Step(arch, prefix) = {
   name: prefix + 'docker',

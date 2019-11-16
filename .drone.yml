@@ -25,6 +25,11 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=amd64
+    cache_from:
+    - angelnu/iobroker:master-amd64
+    - angelnu/iobroker:${DRONE_BRANCH}-amd64
+    - angelnu/iobroker:${DRONE_BRANCH}-amd64
+    - node:12-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -42,6 +47,11 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=amd64
+    cache_from:
+    - angelnu/iobroker:full-master-amd64
+    - angelnu/iobroker:full-${DRONE_BRANCH}-amd64
+    - angelnu/iobroker:${DRONE_BRANCH}-amd64
+    - node:12-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -80,6 +90,11 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm
+    cache_from:
+    - angelnu/iobroker:master-arm
+    - angelnu/iobroker:${DRONE_BRANCH}-arm
+    - angelnu/iobroker:${DRONE_BRANCH}-arm
+    - node:12-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -97,6 +112,11 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm
+    cache_from:
+    - angelnu/iobroker:full-master-arm
+    - angelnu/iobroker:full-${DRONE_BRANCH}-arm
+    - angelnu/iobroker:${DRONE_BRANCH}-arm
+    - node:12-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -135,6 +155,11 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm64
+    cache_from:
+    - angelnu/iobroker:master-arm64
+    - angelnu/iobroker:${DRONE_BRANCH}-arm64
+    - angelnu/iobroker:${DRONE_BRANCH}-arm64
+    - node:12-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -152,6 +177,11 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm64
+    cache_from:
+    - angelnu/iobroker:full-master-arm64
+    - angelnu/iobroker:full-${DRONE_BRANCH}-arm64
+    - angelnu/iobroker:${DRONE_BRANCH}-arm64
+    - node:12-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker

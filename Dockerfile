@@ -58,6 +58,10 @@ ADD scripts/* /usr/local/bin/
 ADD .build/iobroker-stable.md5sum /tmp/
 RUN curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | sed -e 's/,cap_net_admin//g' | bash -
 
+RUN iobroker stop && \
+    iobroker update && \
+    iobroker upgrade self
+
 #The iobroker_data has to be preserved across updates
 #VOLUME /opt/iobroker/iobroker-data
 
