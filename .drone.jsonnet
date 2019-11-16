@@ -1,5 +1,6 @@
 local repo = 'angelnu/iobroker';
 local base_img = 'node:12-stretch';
+local no_cache = true;
 
 local Build_Docker_Step(arch, prefix) = {
   name: prefix + 'docker',
@@ -11,7 +12,7 @@ local Build_Docker_Step(arch, prefix) = {
       prefix + "${DRONE_BRANCH}-"+arch,
       prefix + "latest-"+arch,
     ],
-    cache_from: [
+    cache_from: if no_cache then [] else [
       #docker cache
       repo + ":" + prefix + "master-"+arch,
       repo + ":" + prefix + "${DRONE_BRANCH}-"+arch,
