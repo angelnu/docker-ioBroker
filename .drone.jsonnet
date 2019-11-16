@@ -107,7 +107,7 @@ local Manifest_Step(prefix, tag) = {
 
 local Manifest_Pipeline(prefix) = {
   "kind": "pipeline",
-  "name": "build_manifest",
+  "name": "build_"+prefix+"manifest",
   depends_on: [
     "build_"+prefix+"amd64",
     "build_"+prefix+"arm",

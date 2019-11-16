@@ -323,7 +323,7 @@ steps:
 
 ---
 kind: pipeline
-name: build_manifest
+name: build_full-manifest
 
 platform:
   os: linux
