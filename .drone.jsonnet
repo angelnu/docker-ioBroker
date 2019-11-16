@@ -1,5 +1,5 @@
 local repo = 'angelnu/iobroker';
-local base_img = 'node:12-stretch';
+local base_img = 'node:10-stretch';
 local no_cache = false;
 
 local Build_Docker_Step(arch, prefix) = {
@@ -38,9 +38,9 @@ local Build_Docker_Step(arch, prefix) = {
   }
 };
 
-local Build_Pipeline(arch) = {
+local Build_Pipeline(prefix, arch) = {
   kind: 'pipeline',
-  name: 'build_'+arch,
+  name: 'build_'+prefix+arch,
   platform: {
     os: 'linux',
     arch: arch,
@@ -79,8 +79,7 @@ local Build_Pipeline(arch) = {
         done",
       ]
     }, */
-    Build_Docker_Step(arch, ""),
-    Build_Docker_Step(arch, "full-"),
+    Build_Docker_Step(arch, prefix),
   ],
 };
 
@@ -106,29 +105,31 @@ local Manifest_Step(prefix, tag) = {
   }
 };
 
-local Manifest_Pipeline() = {
+local Manifest_Pipeline(prefix) = {
   "kind": "pipeline",
   "name": "build_manifest",
   depends_on: [
-    "build_amd64",
-    "build_arm",
-    "build_arm64",
+    "build_"+prefix+"amd64",
+    "build_"+prefix+"arm",
+    "build_"+prefix+"arm64",
   ],
   "steps": [
-    Manifest_Step("", "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"),
-    Manifest_Step("", "${DRONE_BRANCH}"),
-    Manifest_Step("", "latest"),
-    Manifest_Step("full-", "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"),
-    Manifest_Step("full-", "${DRONE_BRANCH}"),
-    Manifest_Step("full-", "latest")
+    Manifest_Step(prefix, "${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}"),
+    Manifest_Step(prefix, "${DRONE_BRANCH}"),
+    Manifest_Step(prefix, "latest")
   ]
 };
 
 
 
 [
-  Build_Pipeline("amd64"),
-  Build_Pipeline("arm"),
-  Build_Pipeline("arm64"),
-  Manifest_Pipeline()
+  Build_Pipeline("","amd64"),
+  Build_Pipeline("","arm"),
+  Build_Pipeline("","arm64"),
+  Manifest_Pipeline(""),
+
+  Build_Pipeline("full-","amd64"),
+  Build_Pipeline("full-","arm"),
+  Build_Pipeline("full-","arm64"),
+  Manifest_Pipeline("full-")
 ]

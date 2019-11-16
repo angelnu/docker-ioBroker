@@ -16,5 +16,5 @@ export DRONE_COMMIT=$GIT_COMMIT
 export DRONE_BUILD_NUMBER=99999
 
 drone jsonnet --stream
-drone exec $DRONE_OPTS --pipeline build_amd64
-drone exec $DRONE_OPTS --pipeline build_manifest
+drone exec $DRONE_OPTS --pipeline build_full-amd64
+drone exec $DRONE_OPTS --pipeline build_full-manifest

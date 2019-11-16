@@ -23,14 +23,14 @@ steps:
   image: plugins/docker
   settings:
     build_args:
-    - BASE=node:12-stretch
+    - BASE=node:10-stretch
     - arch=amd64
     - base_repo=angelnu/iobroker:${DRONE_BRANCH}-amd64
     cache_from:
     - angelnu/iobroker:master-amd64
     - angelnu/iobroker:${DRONE_BRANCH}-amd64
     - angelnu/iobroker:${DRONE_BRANCH}-amd64
-    - node:12-stretch
+    - node:10-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -39,29 +39,6 @@ steps:
     - ${DRONE_BRANCH}-amd64
     - latest-amd64
     target: iobroker
-    username:
-      from_secret: DOCKER_USER
-
-- name: full-docker
-  image: plugins/docker
-  settings:
-    build_args:
-    - BASE=node:12-stretch
-    - arch=amd64
-    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-amd64
-    cache_from:
-    - angelnu/iobroker:full-master-amd64
-    - angelnu/iobroker:full-${DRONE_BRANCH}-amd64
-    - angelnu/iobroker:${DRONE_BRANCH}-amd64
-    - node:12-stretch
-    password:
-      from_secret: DOCKER_PASS
-    repo: angelnu/iobroker
-    tags:
-    - full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-amd64
-    - full-${DRONE_BRANCH}-amd64
-    - full-latest-amd64
-    target: full-iobroker
     username:
       from_secret: DOCKER_USER
 
@@ -90,14 +67,14 @@ steps:
   image: plugins/docker
   settings:
     build_args:
-    - BASE=node:12-stretch
+    - BASE=node:10-stretch
     - arch=arm
     - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm
     cache_from:
     - angelnu/iobroker:master-arm
     - angelnu/iobroker:${DRONE_BRANCH}-arm
     - angelnu/iobroker:${DRONE_BRANCH}-arm
-    - node:12-stretch
+    - node:10-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -106,29 +83,6 @@ steps:
     - ${DRONE_BRANCH}-arm
     - latest-arm
     target: iobroker
-    username:
-      from_secret: DOCKER_USER
-
-- name: full-docker
-  image: plugins/docker
-  settings:
-    build_args:
-    - BASE=node:12-stretch
-    - arch=arm
-    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm
-    cache_from:
-    - angelnu/iobroker:full-master-arm
-    - angelnu/iobroker:full-${DRONE_BRANCH}-arm
-    - angelnu/iobroker:${DRONE_BRANCH}-arm
-    - node:12-stretch
-    password:
-      from_secret: DOCKER_PASS
-    repo: angelnu/iobroker
-    tags:
-    - full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-arm
-    - full-${DRONE_BRANCH}-arm
-    - full-latest-arm
-    target: full-iobroker
     username:
       from_secret: DOCKER_USER
 
@@ -157,14 +111,14 @@ steps:
   image: plugins/docker
   settings:
     build_args:
-    - BASE=node:12-stretch
+    - BASE=node:10-stretch
     - arch=arm64
     - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm64
     cache_from:
     - angelnu/iobroker:master-arm64
     - angelnu/iobroker:${DRONE_BRANCH}-arm64
     - angelnu/iobroker:${DRONE_BRANCH}-arm64
-    - node:12-stretch
+    - node:10-stretch
     password:
       from_secret: DOCKER_PASS
     repo: angelnu/iobroker
@@ -173,29 +127,6 @@ steps:
     - ${DRONE_BRANCH}-arm64
     - latest-arm64
     target: iobroker
-    username:
-      from_secret: DOCKER_USER
-
-- name: full-docker
-  image: plugins/docker
-  settings:
-    build_args:
-    - BASE=node:12-stretch
-    - arch=arm64
-    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm64
-    cache_from:
-    - angelnu/iobroker:full-master-arm64
-    - angelnu/iobroker:full-${DRONE_BRANCH}-arm64
-    - angelnu/iobroker:${DRONE_BRANCH}-arm64
-    - node:12-stretch
-    password:
-      from_secret: DOCKER_PASS
-    repo: angelnu/iobroker
-    tags:
-    - full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-arm64
-    - full-${DRONE_BRANCH}-arm64
-    - full-latest-arm64
-    target: full-iobroker
     username:
       from_secret: DOCKER_USER
 
@@ -253,6 +184,152 @@ steps:
     username:
       from_secret: DOCKER_USER
 
+depends_on:
+- build_amd64
+- build_arm
+- build_arm64
+
+---
+kind: pipeline
+name: build_full-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: iobroker_installer_download
+  image: plugins/download
+  settings:
+    destination: .build/iobroker-stable.zip
+    source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
+
+- name: iobroker_installer_checksum
+  image: alpine
+  commands:
+  - md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum
+  - rm .build/iobroker-stable.zip
+
+- name: full-docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=amd64
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-amd64
+    cache_from:
+    - angelnu/iobroker:full-master-amd64
+    - angelnu/iobroker:full-${DRONE_BRANCH}-amd64
+    - angelnu/iobroker:${DRONE_BRANCH}-amd64
+    - node:10-stretch
+    password:
+      from_secret: DOCKER_PASS
+    repo: angelnu/iobroker
+    tags:
+    - full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-amd64
+    - full-${DRONE_BRANCH}-amd64
+    - full-latest-amd64
+    target: full-iobroker
+    username:
+      from_secret: DOCKER_USER
+
+---
+kind: pipeline
+name: build_full-arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+- name: iobroker_installer_download
+  image: plugins/download
+  settings:
+    destination: .build/iobroker-stable.zip
+    source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
+
+- name: iobroker_installer_checksum
+  image: alpine
+  commands:
+  - md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum
+  - rm .build/iobroker-stable.zip
+
+- name: full-docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=arm
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm
+    cache_from:
+    - angelnu/iobroker:full-master-arm
+    - angelnu/iobroker:full-${DRONE_BRANCH}-arm
+    - angelnu/iobroker:${DRONE_BRANCH}-arm
+    - node:10-stretch
+    password:
+      from_secret: DOCKER_PASS
+    repo: angelnu/iobroker
+    tags:
+    - full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-arm
+    - full-${DRONE_BRANCH}-arm
+    - full-latest-arm
+    target: full-iobroker
+    username:
+      from_secret: DOCKER_USER
+
+---
+kind: pipeline
+name: build_full-arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: iobroker_installer_download
+  image: plugins/download
+  settings:
+    destination: .build/iobroker-stable.zip
+    source: https://github.com/ioBroker/ioBroker/archive/stable-installer.zip
+
+- name: iobroker_installer_checksum
+  image: alpine
+  commands:
+  - md5sum .build/iobroker-stable.zip > .build/iobroker-stable.md5sum
+  - rm .build/iobroker-stable.zip
+
+- name: full-docker
+  image: plugins/docker
+  settings:
+    build_args:
+    - BASE=node:10-stretch
+    - arch=arm64
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm64
+    cache_from:
+    - angelnu/iobroker:full-master-arm64
+    - angelnu/iobroker:full-${DRONE_BRANCH}-arm64
+    - angelnu/iobroker:${DRONE_BRANCH}-arm64
+    - node:10-stretch
+    password:
+      from_secret: DOCKER_PASS
+    repo: angelnu/iobroker
+    tags:
+    - full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}-arm64
+    - full-${DRONE_BRANCH}-arm64
+    - full-latest-arm64
+    target: full-iobroker
+    username:
+      from_secret: DOCKER_USER
+
+---
+kind: pipeline
+name: build_manifest
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
 - name: manifest_full-${DRONE_BRANCH}-${DRONE_BUILD_NUMBER}-${DRONE_COMMIT}
   image: plugins/manifest:1
   settings:
@@ -299,8 +376,8 @@ steps:
       from_secret: DOCKER_USER
 
 depends_on:
-- build_amd64
-- build_arm
-- build_arm64
+- build_full-amd64
+- build_full-arm
+- build_full-arm64
 
 ...

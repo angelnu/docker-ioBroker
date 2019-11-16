@@ -1,6 +1,5 @@
 ARG BASE=node:10-stretch
-ARG base_repo=iobroker
-FROM $BASE as $base_repo
+FROM $BASE as iobroker
 
 ENV DEBIAN_FRONTEND="teletype" \
 	#LANG="de_DE.UTF-8" \
@@ -71,7 +70,7 @@ EXPOSE 8081 8082 8083 8084
 ENTRYPOINT ["run.sh"]
 CMD ["start"]
 
-FROM $base_repo as full-iobroker
+FROM iobroker as full-iobroker
 
 ARG adapters="backitup chromecast daikin dwd feiertage flot fritzdect google-sharedlocations harmony history hm-rega hm-rpc \
               # icons-addictive-flavour-png icons-fatcow-hosting icons-icons8 icons-material-png icons-material-svg \
