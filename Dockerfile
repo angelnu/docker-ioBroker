@@ -1,5 +1,6 @@
 ARG BASE=node:10-stretch
-FROM $BASE as iobroker
+ARG base_repo=iobroker
+FROM $BASE as $base_repo
 
 ENV DEBIAN_FRONTEND="teletype" \
 	#LANG="de_DE.UTF-8" \
@@ -56,9 +57,10 @@ ADD scripts/* /usr/local/bin/
 
 #Trigger build when iobroker package changes
 ADD .build/iobroker-stable.md5sum /tmp/
-RUN curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | sed -e 's/,cap_net_admin//g' | bash -
+RUN cat /proc/self/cgroup && curl -sL https://raw.githubusercontent.com/ioBroker/ioBroker/stable-installer/installer.sh | bash -
 
-RUN iobroker stop && \
+RUN getcap $(eval readlink -f `which node`) && \
+    iobroker stop && \
     iobroker update && \
     iobroker upgrade self
 
@@ -69,7 +71,7 @@ EXPOSE 8081 8082 8083 8084
 ENTRYPOINT ["run.sh"]
 CMD ["start"]
 
-FROM iobroker as full-iobroker
+FROM $base_repo as full-iobroker
 
 ARG adapters="backitup chromecast daikin dwd feiertage flot fritzdect google-sharedlocations harmony history hm-rega hm-rpc \
               # icons-addictive-flavour-png icons-fatcow-hosting icons-icons8 icons-material-png icons-material-svg \

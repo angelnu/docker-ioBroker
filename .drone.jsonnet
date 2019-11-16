@@ -33,6 +33,7 @@ local Build_Docker_Step(arch, prefix) = {
     build_args: [
       'BASE='+base_img,
       'arch='+arch,
+      'base_repo='+repo + ":" + "${DRONE_BRANCH}-"+arch,
     ],
   }
 };

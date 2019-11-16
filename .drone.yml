@@ -25,6 +25,7 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=amd64
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-amd64
     cache_from:
     - angelnu/iobroker:master-amd64
     - angelnu/iobroker:${DRONE_BRANCH}-amd64
@@ -47,6 +48,7 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=amd64
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-amd64
     cache_from:
     - angelnu/iobroker:full-master-amd64
     - angelnu/iobroker:full-${DRONE_BRANCH}-amd64
@@ -90,6 +92,7 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm
     cache_from:
     - angelnu/iobroker:master-arm
     - angelnu/iobroker:${DRONE_BRANCH}-arm
@@ -112,6 +115,7 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm
     cache_from:
     - angelnu/iobroker:full-master-arm
     - angelnu/iobroker:full-${DRONE_BRANCH}-arm
@@ -155,6 +159,7 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm64
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm64
     cache_from:
     - angelnu/iobroker:master-arm64
     - angelnu/iobroker:${DRONE_BRANCH}-arm64
@@ -177,6 +182,7 @@ steps:
     build_args:
     - BASE=node:12-stretch
     - arch=arm64
+    - base_repo=angelnu/iobroker:${DRONE_BRANCH}-arm64
     cache_from:
     - angelnu/iobroker:full-master-arm64
     - angelnu/iobroker:full-${DRONE_BRANCH}-arm64
