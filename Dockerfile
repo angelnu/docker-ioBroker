@@ -75,9 +75,9 @@ FROM iobroker as full-iobroker
 ARG adapters="backitup chromecast daikin dwd feiertage flot fritzdect google-sharedlocations harmony history hm-rega hm-rpc \
               # icons-addictive-flavour-png icons-fatcow-hosting icons-icons8 icons-material-png icons-material-svg \
               # icons-mfd-png icons-mfd-svg icons-open-icon-library-png icons-ultimate-png \
-              influxdb iot javascript material mobile openhab rickshaw sayit scenes simple-api \
+              influxdb iot javascript material mobile openhab rickshaw sayit scenes simple-api sonoff \
               vis vis-bars vis-canvas-gauges vis-colorpicker vis-fancyswitch vis-google-fonts vis-history vis-hqwidgets \
-              vis-jqui-mfd vis-justgage vis-lcars vis-map vis-material vis-metro vis-players vis-timeandweather vis-weather"
+              vis-jqui-mfd vis-justgage vis-lcars vis-map vis-metro vis-players vis-timeandweather vis-weather"
 
 #Install adapters
 RUN for adapter in ${adapters}; do iobroker install $adapter; done
